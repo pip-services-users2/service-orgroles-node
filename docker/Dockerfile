@@ -31,4 +31,4 @@ ENV MONGO_DB app
 
 EXPOSE 8080
 
-ENTRYPOINT [ "node", "./bin/run.js" ]
+ENTRYPOINT [ "node", "./bin/main.js" ]

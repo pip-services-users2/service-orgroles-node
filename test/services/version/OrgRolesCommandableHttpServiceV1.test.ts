@@ -6,7 +6,7 @@ import { Descriptor } from 'pip-services3-commons-nodex';
 import { References } from 'pip-services3-commons-nodex';
 
 import { OrgRolesController } from '../../../src/logic/OrgRolesController';
-import { OrgRolesHttpServiceV1 } from '../../../src/services/version1/OrgRolesHttpServiceV1';
+import { OrgRolesCommandableHttpServiceV1 } from '../../../src/services/version1/OrgRolesCommandableHttpServiceV1';
 
 import { RolesNullClientV1 } from 'client-roles-node';
 import { OrganizationsNullClientV1 } from 'client-organizations-node';
@@ -18,20 +18,20 @@ let httpConfig = ConfigParams.fromTuples(
     "connection.port", 3000
 );
 
-suite('OrgRolesHttpServiceV1', ()=> {
-    let service: OrgRolesHttpServiceV1;
+suite('OrgRolesCommandableHttpServiceV1', ()=> {
+    let service: OrgRolesCommandableHttpServiceV1;
     let rest: any;
 
     suiteSetup(async () => {
         let controller = new OrgRolesController();
 
-        service = new OrgRolesHttpServiceV1();
+        service = new OrgRolesCommandableHttpServiceV1();
         service.configure(httpConfig);
 
         let references: References = References.fromTuples(
             new Descriptor('service-roles', 'client', 'null', 'default', '1.0'), new RolesNullClientV1(),
             new Descriptor('service-orgroles', 'controller', 'default', 'default', '1.0'), controller,
-            new Descriptor('service-orgroles', 'service', 'http', 'default', '1.0'), service,
+            new Descriptor('service-orgroles', 'service', 'commandable-http', 'default', '1.0'), service,
             new Descriptor('service-msgdistribution', 'client', 'null', 'default', '1.0'), new MessageDistributionNullClientV1(),
             new Descriptor('service-organizations', 'client', 'null', 'default', '1.0'), new OrganizationsNullClientV1()
         );
